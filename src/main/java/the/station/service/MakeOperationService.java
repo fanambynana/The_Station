@@ -3,6 +3,7 @@ package the.station.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import the.station.model.Enum.OperationType;
 import the.station.model.MakeOperation;
 import the.station.model.MakeOperationWithPrice;
 import the.station.model.Price;
@@ -55,13 +56,8 @@ public class MakeOperationService {
     public MakeOperation save(MakeOperation toSave) {
         MakeOperation returned = null;
         Double quantity = toSave.getQuantity();
-
-        if (toSave.getClass() == MakeOperationWithPrice.class) {
-
-        } else {
-            if (quantity <= MAX_QUANTITY) {
-                returned = makeOperationAutoCrudOperation.save(toSave);
-            }
+        if (quantity <= MAX_QUANTITY) {
+            returned = makeOperationAutoCrudOperation.save(toSave);
         }
         return returned;
     }
@@ -70,5 +66,15 @@ public class MakeOperationService {
     }
     public Boolean deleteById(Integer id) {
         return makeOperationAutoCrudOperation.deleteById(id);
+    }
+    public MakeOperation latestInOperation() {
+         return new LinkedList<>(makeOperationAutoCrudOperation.findCustom(
+                List.of(new KeyAndValue("operationType", OperationType.IN.toString()))
+         )).getLast();
+    }
+    public MakeOperation latestOutOperation() {
+        return new LinkedList<>(makeOperationAutoCrudOperation.findCustom(
+                List.of(new KeyAndValue("operationType", OperationType.OUT.toString()))
+        )).getLast();
     }
 }
