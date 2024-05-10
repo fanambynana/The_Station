@@ -45,3 +45,10 @@ CREATE TABLE Make_Operation(
 	CONSTRAINT Make_Operation_Product_FK FOREIGN KEY (id_product) REFERENCES Product(id_product),
 	CONSTRAINT Make_Operation_Station_FK FOREIGN KEY (id_station) REFERENCES Station(id_station)
 );
+
+CREATE TABLE Quantity(
+    id_quantity SERIAL PRIMARY KEY ,
+    value  DOUBLE PRECISION NOT NULL ,
+    update_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_product INT NOT NULL REFERENCES Product(id_product)
+);
