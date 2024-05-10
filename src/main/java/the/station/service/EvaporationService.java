@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import the.station.model.Evaporation;
 import the.station.repository.AutoCrudOperation;
+import the.station.repository.KeyAndValue;
 
 @Service
 public class EvaporationService {
@@ -30,5 +31,8 @@ public class EvaporationService {
     }
     public Boolean deleteById(Integer id) {
         return evaporationAutoCrudOperation.deleteById(id);
+    }
+    public List<Evaporation> findCustom(List<KeyAndValue> keyAndValueList) {
+        return evaporationAutoCrudOperation.findCustom(keyAndValueList);
     }
 }
